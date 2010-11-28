@@ -1,3 +1,0 @@
-[submodule "arduino"]
-	path = arduino
-	url = git://github.com/arduino/Arduino.git
