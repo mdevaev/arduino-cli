@@ -34,8 +34,10 @@ Requires:	avr-libc, avr-gcc, avr-gcc-c++, avr-binutils, avrdude
 %install
 rm -rf ${RPM_BUILD_ROOT}
 mkdir -p ${RPM_BUILD_ROOT}/%{_datadir}/arduino
+mkdir -p ${RPM_BUILD_ROOT}/%{_bindir}
 cp -a arduino/* ${RPM_BUILD_ROOT}/%{_datadir}/arduino
 cp -a tools/Makefile.sketch ${RPM_BUILD_ROOT}/%{_datadir}/arduino
+install -m755 tools/serial_chat.py ${RPM_BUILD_ROOT}/%{_bindir}
 
 
 %clean
@@ -45,8 +47,14 @@ rm -rf ${RPM_BUILD_ROOT}
 %files
 %defattr(-, root, root, -)
 %{_datadir}/arduino
+%{_bindir}/serial_chat.py
+
 
 %changelog
+* Sun Nov 28 2010 Devaev Maxim <mdevaev@gmail.com> 1.0-20101128svn
+- Arduino Libs version 0021
+- serial_chat.py for talking with controller :-) 
+
 * Sat Sep 04 2010 Devaev Maxim <mdevaev@gmail.com> 1.0-20100904svn
 - Arduino Libs version 0019
 
