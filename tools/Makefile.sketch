@@ -7,8 +7,7 @@
 #  http://www.arduino.cc/en/uploads/Hacking/Makefile
 #
 # Arduino libraries can be downloded from:
-#  svn checkout http://arduino.googlecode.com/svn/trunk/hardware/arduino/cores/arduino
-#  svn checkout http://arduino.googlecode.com/svn/trunk/libraries
+#  git clone git://github.com/arduino/Arduino.git
 #
 # API reference:
 #  http://arduino.cc/en/Reference/HomePage
