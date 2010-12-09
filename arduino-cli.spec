@@ -1,7 +1,8 @@
-%define svn_build 1
+%define vcs_build 1
 
-%if %{svn_build}
-%define build_version %(date +%%Y%%m%%d)svn%{?dist}
+%if %{vcs_build}
+# date +%Y%m%d
+%define build_version 20101209vcs%{?dist}
 %else
 %define build_version 1
 %endif
@@ -9,9 +10,9 @@
 
 Name:		arduino-cli
 Version:	1.0
-Release:	%{build_version}
+Release:	${build_version}
 Summary:	CLI development tools for Arduino without Java and Arduino IDE
-Group:		Development/Tools
+Group:	Development/Tools
 License:	GPL
 URL:		http://code.google.com/p/arduino-cli
 Source0:	%{name}-%{version}.tar.bz2
@@ -24,7 +25,7 @@ Requires:	avr-libc, avr-gcc, avr-gcc-c++, avr-binutils, avrdude
 
 
 %prep
-%if %{svn_build}
+%if %{vcs_build}
 %setup -q -n %{name}
 %else
 %setup -q
