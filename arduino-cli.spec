@@ -10,7 +10,7 @@
 
 Name:		arduino-cli
 Version:	1.0
-Release:	${build_version}
+Release:	%{build_version}
 Summary:	CLI development tools for Arduino without Java and Arduino IDE
 Group:	Development/Tools
 License:	GPL
