@@ -2,7 +2,7 @@
 
 %if %{vcs_build}
 # date +%Y%m%d
-%define build_version 20101209vcs%{?dist}
+%define build_version 20110416vcs%{?dist}
 %else
 %define build_version 1
 %endif
