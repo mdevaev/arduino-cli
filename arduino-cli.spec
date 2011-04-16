@@ -52,6 +52,9 @@ rm -rf ${RPM_BUILD_ROOT}
 
 
 %changelog
+* Sat Apr 16 2011 Devaev Maxim <mdevaev@gmail.com> 1.0-20110416svn
+- Arduino Libs version 0022
+
 * Sun Nov 28 2010 Devaev Maxim <mdevaev@gmail.com> 1.0-20101128svn
 - Arduino Libs version 0021
 - serial_chat.py for talking with controller :-) 
