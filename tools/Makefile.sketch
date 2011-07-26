@@ -32,7 +32,7 @@ UPLOAD_RATE = 57600
 AVRDUDE_FORMAT=:a
 
 # Arduino libraries version and path to sources and headers
-ARDUINO_VERSION = 18
+ARDUINO_VERSION = 21
 ARDUINO_SRC = /usr/share/arduino/hardware/arduino/cores/arduino/
 # ... insert additional libs here ^^^, for example, /usr/share/arduino/libraries/EEPROM
 
