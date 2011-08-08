@@ -21,6 +21,7 @@
 # UPLOAD_RATE: 300, 1200, 2400, 4800, 9600, 14400, 19200, 38400, 57600, 115200
 #####
 
+
 # Basic controller options (by default sets for Arduino Mega)
 # See files boards.txt and programmers.txt in /usr/share/arduino/hardware/arduino for choose options for your controller
 MCU = atmega1280
@@ -29,10 +30,10 @@ FORMAT = ihex
 PORT = /dev/ttyUSB0
 PROGRAMMER = stk500v1
 UPLOAD_RATE = 57600
-AVRDUDE_FORMAT=:a
+AVRDUDE_FORMAT=:i
 
 # Arduino libraries version and path to sources and headers
-ARDUINO_VERSION = 21
+ARDUINO_VERSION = 22
 ARDUINO_SRC = /usr/share/arduino/hardware/arduino/cores/arduino/
 # ... insert additional libs here ^^^, for example, /usr/share/arduino/libraries/EEPROM
 
@@ -45,6 +46,7 @@ OBJDUMP = avr-objdump
 SIZE = avr-size
 NM = avr-nm
 AVRDUDE = avrdude
+PYTHON = python2
 MKDIR = mkdir
 CP = cp
 RM = rm
@@ -72,7 +74,6 @@ LDFLAGS = -Wl,--gc-section
 
 
 ##### Targets #####
-
 .SUFFIXES : .elf .hex .eep .lss .sym
 
 .c.o :
@@ -114,6 +115,7 @@ $(ARDUINO_LOCAL_SRC) :
 
 
 upload : $(PROJECT).hex
+	$(PYTHON) -c "import serial, time; s = serial.Serial(\"$(PORT)\", $(UPLOAD_RATE)); s.setDTR(False); s.setRTS(False); time.sleep(0.1); s.setDTR(True);s .setRTS(True)"
 	$(AVRDUDE) -F -p $(MCU) -P $(PORT) -c $(PROGRAMMER) -b $(UPLOAD_RATE) -D -U flash:w:$(PROJECT).hex$(AVRDUDE_FORMAT)
 
 coff : $(PROJECT).elf
