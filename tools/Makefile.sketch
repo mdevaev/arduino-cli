@@ -1,5 +1,5 @@
 # Arduino sketch Makefile
-# Copyright (C) 2010 Devaev Maxim <mdevaev@gmail.com>
+# Copyright (C) 2010-2011 Devaev Maxim <mdevaev@gmail.com>
 #
 # This Makefile allows you to build sketches from the CLI without the Arduino IDE and Java
 #
@@ -22,7 +22,7 @@
 #####
 
 
-# Basic controller options (by default sets for Arduino Mega)
+# Basic controller options (by default sets for Arduino Mega 1280)
 # See files boards.txt and programmers.txt in /usr/share/arduino/hardware/arduino for choose options for your controller
 MCU = atmega1280
 F_CPU = 16000000L
@@ -30,10 +30,11 @@ FORMAT = ihex
 PORT = /dev/ttyUSB0
 PROGRAMMER = stk500v1
 UPLOAD_RATE = 57600
+CHAT_RATE = 115200
 AVRDUDE_FORMAT=:i
 
 # Arduino libraries version and path to sources and headers
-ARDUINO_VERSION = 22
+ARDUINO_VERSION = 23
 ARDUINO_SRC = /usr/share/arduino/hardware/arduino/cores/arduino/
 # ... insert additional libs here ^^^, for example, /usr/share/arduino/libraries/EEPROM
 
@@ -53,10 +54,10 @@ RM = rm
 
 # Project settings and sources
 PROJECT = $(shell basename `pwd`)
-ARDUINO_LOCAL = arduino_src
+ARDUINO_LOCAL = buildlibs
 ARDUINO_LOCAL_SRC = $(shell for src in $(ARDUINO_SRC); do echo "$(ARDUINO_LOCAL)/`basename $$src` "; done)
-CSRC = $(shell find . -name '*.c')
-CXXSRC = $(shell find . -name '*.cpp')
+CSRC = $(shell find . -name '*.c' | grep -vi '\<examples\>')
+CXXSRC = $(shell find . -name '*.cpp' | grep -vi '\<examples\>')
 OBJ = $(CSRC:.c=.o) $(CXXSRC:.cpp=.o)
 
 # Place -D or -U options here
@@ -118,6 +119,7 @@ upload : $(PROJECT).hex
 	$(PYTHON) -c "import serial, time; s = serial.Serial(\"$(PORT)\", $(UPLOAD_RATE)); s.setDTR(False); s.setRTS(False); time.sleep(0.1); s.setDTR(True);s .setRTS(True)"
 	$(AVRDUDE) -F -p $(MCU) -P $(PORT) -c $(PROGRAMMER) -b $(UPLOAD_RATE) -D -U flash:w:$(PROJECT).hex$(AVRDUDE_FORMAT)
 
+
 coff : $(PROJECT).elf
 	$(OBJCOPY) --debugging \
 		--change-section-address .data-0x800000 \
@@ -131,6 +133,7 @@ extcoff : $(PROJECT).elf
 		--change-section-address .bss-0x800000 \
 		--change-section-address .noinit-0x800000 \
 		--change-section-address .eeprom-0x810000 -O coff-ext-avr $(PROJECT).elf $(PROJECT).cof
+
 
 clean :
 	$(RM) -f $(PROJECT).hex $(PROJECT).eep $(PROJECT).cof $(PROJECT).elf $(PROJECT).map $(PROJECT).sym $(PROJECT).lss $(OBJ)
