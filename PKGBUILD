@@ -1,7 +1,7 @@
 # Contributor : Devaev Maxim <mdevaev@gmail.com>
 
 pkgname=arduino-cli
-pkgver=20111113
+pkgver=20120303
 pkgrel=1
 pkgdesc="CLI development tools for Arduino without Java and Arduino IDE"
 arch=('any')
