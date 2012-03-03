@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <inttypes.h>
-#include "WProgram.h"
+#include "Arduino.h"
 
 // When the display powers up, it is configured as follows:
 //
@@ -173,7 +173,7 @@ void LiquidCrystal::home()
 void LiquidCrystal::setCursor(uint8_t col, uint8_t row)
 {
   int row_offsets[] = { 0x00, 0x40, 0x14, 0x54 };
-  if ( row > _numlines ) {
+  if ( row >= _numlines ) {
     row = _numlines-1;    // we count rows starting w/0
   }
   
@@ -258,8 +258,9 @@ inline void LiquidCrystal::command(uint8_t value) {
   send(value, LOW);
 }
 
-inline void LiquidCrystal::write(uint8_t value) {
+inline size_t LiquidCrystal::write(uint8_t value) {
   send(value, HIGH);
+  return 1; // assume sucess
 }
 
 /************ low level data pushing commands **********/
