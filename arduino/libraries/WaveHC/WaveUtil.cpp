@@ -1,6 +1,6 @@
 
 #if ARDUINO < 100
-#include <WProgram.h>
+#include <Arduino.h>
 #else  // ARDUINO
 #include <Arduino.h>
 #endif  // ARDUINO

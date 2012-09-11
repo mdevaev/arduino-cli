@@ -18,7 +18,7 @@
  * <http://www.gnu.org/licenses/>.
  */
 #if ARDUINO < 100
-#include <WProgram.h>
+#include <Arduino.h>
 #else  // ARDUINO < 100
 #include <Arduino.h>
 #endif  // ARDUINO < 100

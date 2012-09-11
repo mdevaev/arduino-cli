@@ -15,7 +15,7 @@
 # The Arduino environment does preliminary processing on a sketch before compiling it.
 # If you're using this Makefile instead, you'll need to do a few things differently:
 #  - Give your program's file a .cpp extension (e.g. foo.cpp);
-#  - Put this line at top of your code: #include <WProgram.h> (and other headers);
+#  - Put this line at top of your code: #include <Arduino.h> (and other headers);
 #  - Write prototypes for all your functions;
 #
 # UPLOAD_RATE: 300, 1200, 2400, 4800, 9600, 14400, 19200, 38400, 57600, 115200
