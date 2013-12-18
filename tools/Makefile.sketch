@@ -22,20 +22,24 @@
 #####
 
 
+BOARD = mega
+PORT = /dev/ttyUSB0
+
 # Basic controller options (by default sets for Arduino Mega 1280)
 # See files boards.txt and programmers.txt in /usr/share/arduino/hardware/arduino for choose options for your controller
-MCU = atmega1280
-F_CPU = 16000000L
+BOARDS_TXT = /usr/share/arduino/hardware/arduino/boards.txt
+MCU = $(shell grep '$(BOARD).build.mcu' $(BOARDS_TXT) | sed 's/[^=]*=\(.*\)/\1/g')
+F_CPU = $(shell grep '$(BOARD).build.f_cpu' $(BOARDS_TXT) | sed 's/[^=]*=\(.*\)/\1/g')
+CORE = $(shell grep '$(BOARD).build.core' $(BOARDS_TXT) | sed 's/[^=]*=\(.*\)/\1/g')
+VARIANT = $(shell grep '$(BOARD).build.variant' $(BOARDS_TXT) | sed 's/[^=]*=\(.*\)/\1/g')
 FORMAT = ihex
-PORT = /dev/ttyUSB0
-PROGRAMMER = stk500v1
-UPLOAD_RATE = 57600
-CHAT_RATE = 115200
+PROGRAMMER = $(shell grep '$(BOARD).upload.protocol' $(BOARDS_TXT) | sed 's/[^=]*=\(.*\)/\1/g')
+UPLOAD_RATE = $(shell grep '$(BOARD).upload.speed' $(BOARDS_TXT) | sed 's/[^=]*=\(.*\)/\1/g')
 AVRDUDE_FORMAT=:i
 
 # Arduino libraries version and path to sources and headers
 ARDUINO_VERSION = 23
-ARDUINO_SRC = /usr/share/arduino/hardware/arduino/cores/arduino/
+ARDUINO_SRC = /usr/share/arduino/hardware/arduino/cores/$(CORE) /usr/share/arduino/hardware/arduino/variants/$(VARIANT)
 # ... insert additional libs here ^^^, for example, /usr/share/arduino/libraries/EEPROM
 
 # Tools
