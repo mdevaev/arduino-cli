@@ -1,7 +1,7 @@
 # Contributor : Devaev Maxim <mdevaev@gmail.com>
 
 pkgname=arduino-cli
-pkgver=20120303
+pkgver=0.1
 pkgrel=1
 pkgdesc="CLI development tools for Arduino without Java and Arduino IDE"
 arch=('any')
@@ -23,7 +23,7 @@ build() {
 		msg "The local files are updated."
 		cd ..
 	else
-		git clone $_gitroot --depth=1
+		git clone --branch=v$pkgver --depth=1 $_gitroot
 	fi
 
 	msg "Git clone done or server timeout"
