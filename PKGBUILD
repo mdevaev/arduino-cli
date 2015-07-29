@@ -1,40 +1,41 @@
-# Contributor : Devaev Maxim <mdevaev@gmail.com>
+# Contributor: Devaev Maxim <mdevaev@gmail.com>
+# Author: Devaev Maxim <mdevaev@gmail.com>
 
-pkgname=arduino-cli
-pkgver=0.2
-pkgrel=2
+
+pkgname="arduino-cli"
+pkgver="1.6.5.3"
+pkgrel="1"
 pkgdesc="CLI development tools for Arduino without Java and Arduino IDE"
-arch=('any')
-url="http://code.google.com/p/arduino-cli"
+arch=("any")
+url="https://github.com/mdevaev/arduino-cli"
 license="GPL"
-depends=('avr-libc' 'gcc-avr' 'avr-binutils' 'avrdude' 'python2')
-makedepends=('git')
-conflicts=('arduino')
-replaces=('arduino')
+depends=(
+	"avr-libc"
+	"avr-gcc"
+	"avr-binutils"
+	"avrdude"
+	"make"
+)
+makedepends=("wget")
+conflicts=("arduino")
+replaces=("arduino")
+options=("!strip")
 
-_gitroot="git://github.com/mdevaev/arduino-cli.git"
-_gitname="arduino-cli"
 
-
-build() {
+package() {
 	cd $startdir/src
-	if [ -d $_gitname ]; then
-		msg "Updateing local repository..."
-		cd $_gitname
-		git pull origin master || return 1
-		msg "The local files are updated."
-		cd ..
-	else
-		git clone --branch=v$pkgver --depth=1 $_gitroot
+	if [ ! -d $pkgname-$pkgver-$pkgrel ]; then
+		msg "Downloading tag v$pkgver..."
+		wget $url/archive/v$pkgver.tar.gz
+		tar -xzf v$pkgver.tar.gz
 	fi
 
-	msg "Git clone done or server timeout"
-	msg "Starting make..."
+	rm -rf $pkgname-build
+	cp -r $pkgname-$pkgver-$pkgrel $pkgname-build
+	cd $pkgname-build
 
-	rm -rf $_gitname-build
-	cp -r $_gitname $_gitname-build
-	cd $_gitname-build
-
-	make DESTDIR=$pkgdir install
+	mkdir -p $pkgdir/usr/share/arduino
+	mkdir -p $pkgdir/usr/bin
+	cp -a arduino/* $pkgdir/usr/share/arduino
+	cp -a Makefile.sketch $pkgdir/usr/share/arduino
 }
-
